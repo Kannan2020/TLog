@@ -1,0 +1,57 @@
+﻿@model TLog.Models.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container-fluid body-content" style="    margin-top: 10%;">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ServiceLines)
+                @Html.DropDownListFor(m => m.ServiceLines, Model.ServiceLines, "---Select ServiceLine---", new { @class = "form-control", @id = "ddlServiceLine" })
+                @Html.ValidationMessageFor(m => m.ServiceLines)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ActivityNames)
+                <div id="divActivity">
+                    @Html.DropDownListFor(m => m.ActivityNames, new List<SelectListItem>(), "---Select Activity---", new { @class = "form-control", @id = "ddlActivity" })
+
+                </div>
+                @Html.ValidationMessageFor(m => m.ActivityNames)
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+
+   <script type="text/javascript">
+
+       $(document).ready(function () {
+           $('#ddlServiceLine').change(function () {
+               $.ajax({
+                   type: "post",
+                   url: "/Home/GetActivity",
+                   data: { serviceLineId: $('#ddlServiceLine').val() },
+                   datatype: "json",
+                   traditional: true,
+                   success: function (data) {
+                       var activity = "<select id='ddlActivity' class='form-control'>";
+                       activity = activity + '<option value="">---Select Activity---</option>';
+                       for (var i = 0; i < data.length; i++) {
+                           activity = activity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                       }
+                       activity = activity + '</select>';
+                       $('#divActivity').html(activity);
+                   }
+               });
+           });
+       });
+</script>
+  
+
+}
