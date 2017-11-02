@@ -20,10 +20,10 @@ namespace TLog.Controllers
             List<SelectListItem> ServiceLines = new List<SelectListItem>();
             HomeViewModel model = new HomeViewModel();
 
-            List<ServiceLine> serviceLines = db.ServiceLines.Where(u=>u.IsActive==true).ToList();
+            List<ServiceLineFunction> serviceLines = db.ServiceLineFunctions.Where(u=>u.Active==true).ToList();
             serviceLines.ForEach(x =>
             {
-                ServiceLines.Add(new SelectListItem { Text = x.ServiceLineName, Value = x.Id.ToString() });
+                ServiceLines.Add(new SelectListItem { Text = x.Name, Value = x.ID.ToString() });
             });
             model.ServiceLines = ServiceLines;
             return View(model);
@@ -36,10 +36,10 @@ namespace TLog.Controllers
             if (!string.IsNullOrEmpty(serviceLineId))
             {
                 serviceLinId = Convert.ToInt32(serviceLineId);
-                List<Activity> districts = db.Activities.Where(x => x.ServiceLineId == serviceLinId && x.IsActive==true).ToList();
-                districts.ForEach(x =>
+                List<Activity> Activity = db.Activities.Where(x => x.ServiceLineFunctionID == serviceLinId && x.Active==true).ToList();
+                Activity.ForEach(x =>
                 {
-                    serviceLineNames.Add(new SelectListItem { Text = x.ActivityName, Value = x.Id.ToString() });
+                    serviceLineNames.Add(new SelectListItem { Text = x.Name, Value = x.ID.ToString() });
                 });
             }
             return Json(serviceLineNames, JsonRequestBehavior.AllowGet);

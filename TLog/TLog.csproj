@@ -118,6 +118,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebGridMvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGridMvc.1.0.0\lib\net40\WebGridMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -150,16 +154,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MastersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
       <DependentUpon>TLogModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
-    <Compile Include="Models\ServiceLine.cs">
+    <Compile Include="Models\ServiceLineFunction.cs">
       <DependentUpon>TLogModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ServiceLineViewModel.cs" />
     <Compile Include="Models\TLogModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,11 +197,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Trimont_logo3.jpg" />
+    <Content Include="Images\trimont.jpg" />
+    <Content Include="Images\trimont_logo_trimont_black.jpg" />
     <Content Include="Models\TLogModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TLogModel.Context.cs</LastGenOutput>
       <DependentUpon>TLogModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Models\TLogModel.edmx.sql" />
     <Content Include="Models\TLogModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TLogModel.edmx</DependentUpon>
@@ -236,6 +247,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\webGrid.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -250,6 +262,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Masters\Index.cshtml" />
+    <Content Include="Views\Masters\_ServiceLinePartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

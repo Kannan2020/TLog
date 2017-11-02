@@ -10,6 +10,30 @@
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
 }
+.navbar-fixed-top {
+    min-height: 80px;
+}
+
+.navbar-nav > li > a {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 80px;
+}
+
+@media (max-width: 767px) {
+    .navbar-nav > li > a {
+    line-height: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;}
+}
+
+.icon-bar a:hover {
+    background-color: #000;
+}
+
+.active {
+    background-color: #4CAF50 !important;
+}
 
     *:focus {
         outline: none;
@@ -70,6 +94,7 @@ html, body {
 .navigation-bar, .navigation-bar .navbox-tiles, .navbox-trigger, .navbox-tiles .tile, .navbox-tiles .tile .icon .fa, .navbox-tiles .tile .title {
     -webkit-transition: all .3s;
     transition: all .3s;
+    
 }
 
 .navbox-tiles:after {
@@ -88,7 +113,7 @@ html, body {
 }
 
     .navigation-bar .bar {
-        background-color: #252525;
+       
         width: 100%;
         height: 100%;
         position: absolute;
@@ -99,8 +124,9 @@ html, body {
         visibility: hidden;
         opacity: 0;
         position: absolute;
-        top: 100%;
-        left: 0;
+        top: 162%;
+        /*left: 0;*/
+        right:0;
         z-index: 1;
         -webkit-transform: translateY(-200px);
         -ms-transform: translateY(-200px);
@@ -137,10 +163,11 @@ html, body {
 
 .navbox-trigger {
     background-color: transparent;
-    width: 50px;
-    height: 50px;
+    width: 85px;
+    height: 85px;
     line-height: 50px;
     text-align: center;
+    vertical-align:middle;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

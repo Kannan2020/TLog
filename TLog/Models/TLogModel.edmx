@@ -4,116 +4,114 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceLineId" Type="int" Nullable="false" />
-          <Property Name="ActivityName" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ServiceLines">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceLineName" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Activity_ServiceLines">
-          <End Role="ServiceLines" Type="Self.ServiceLines" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceLines">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="ServiceLineId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="TLogModelStoreContainer">
-          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ServiceLines" EntityType="Self.ServiceLines" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Activity_ServiceLines" Association="Self.FK_Activity_ServiceLines">
-            <End Role="ServiceLines" EntitySet="ServiceLines" />
-            <End Role="Activity" EntitySet="Activity" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="TLogModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TLogModelStoreContainer">
+    <EntitySet Name="Activities" EntityType="TLogModel.Store.Activities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ServiceLineFunctions" EntityType="TLogModel.Store.ServiceLineFunctions" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Activity_ServiceLineFunction" Association="TLogModel.Store.FK_Activity_ServiceLineFunction">
+      <End Role="ServiceLineFunction" EntitySet="ServiceLineFunctions" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceLineFunctionID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiceLineFunctions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Activity_ServiceLineFunction">
+    <End Role="ServiceLineFunction" Type="TLogModel.Store.ServiceLineFunctions" Multiplicity="1" />
+    <End Role="Activity" Type="TLogModel.Store.Activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceLineFunction">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="ServiceLineFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceLineId" Type="Int32" Nullable="false" />
-          <Property Name="ActivityName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ServiceLine" Relationship="Self.FK_Activity_ServiceLines" FromRole="Activity" ToRole="ServiceLines" />
-        </EntityType>
-        <EntityType Name="ServiceLine">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceLineName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_ServiceLines" FromRole="ServiceLines" ToRole="Activity" />
-        </EntityType>
-        <Association Name="FK_Activity_ServiceLines">
-          <End Role="ServiceLines" Type="Self.ServiceLine" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceLines">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="ServiceLineId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="TLogEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Activities" EntityType="Self.Activity" />
-          <EntitySet Name="ServiceLines" EntityType="Self.ServiceLine" />
-          <AssociationSet Name="FK_Activity_ServiceLines" Association="Self.FK_Activity_ServiceLines">
-            <End Role="ServiceLines" EntitySet="ServiceLines" />
+          <EntitySet Name="Activities" EntityType="TLogModel.Activity" />
+          <EntitySet Name="ServiceLineFunctions" EntityType="TLogModel.ServiceLineFunction" />
+          <AssociationSet Name="FK_Activity_ServiceLineFunction" Association="TLogModel.FK_Activity_ServiceLineFunction">
+            <End Role="ServiceLineFunction" EntitySet="ServiceLineFunctions" />
             <End Role="Activity" EntitySet="Activities" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceLineFunctionID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceLineFunction" Relationship="TLogModel.FK_Activity_ServiceLineFunction" FromRole="Activity" ToRole="ServiceLineFunction" />
+        </EntityType>
+        <EntityType Name="ServiceLineFunction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="TLogModel.FK_Activity_ServiceLineFunction" FromRole="ServiceLineFunction" ToRole="Activity" />
+        </EntityType>
+        <Association Name="FK_Activity_ServiceLineFunction">
+          <End Type="TLogModel.ServiceLineFunction" Role="ServiceLineFunction" Multiplicity="1" />
+          <End Type="TLogModel.Activity" Role="Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceLineFunction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="ServiceLineFunctionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TLogModelStoreContainer" CdmEntityContainer="TLogEntities">
-          <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="TLogModel.Activity">
-              <MappingFragment StoreEntitySet="Activity">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ServiceLineId" ColumnName="ServiceLineId" />
-                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceLines">
-            <EntityTypeMapping TypeName="TLogModel.ServiceLine">
-              <MappingFragment StoreEntitySet="ServiceLines">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ServiceLineName" ColumnName="ServiceLineName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TLogModelStoreContainer" CdmEntityContainer="TLogEntities">
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="IsTypeOf(TLogModel.Activity)">
+        <MappingFragment StoreEntitySet="Activities">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ServiceLineFunctionID" ColumnName="ServiceLineFunctionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceLineFunctions">
+      <EntityTypeMapping TypeName="IsTypeOf(TLogModel.ServiceLineFunction)">
+        <MappingFragment StoreEntitySet="ServiceLineFunctions">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -127,7 +125,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

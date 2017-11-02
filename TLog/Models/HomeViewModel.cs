@@ -6,7 +6,7 @@ namespace TLog.Models
 {
     public class HomeViewModel
     {
-        [Display(Name ="Servive Line")]
+        [Display(Name ="Service Line Function")]
         public IList<SelectListItem> ServiceLines { get; set; }
         [Display(Name = "Activity")]
         public IList<SelectListItem> ActivityNames { get; set; }

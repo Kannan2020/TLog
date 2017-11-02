@@ -15,12 +15,19 @@ namespace TLog.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Activity
+public partial class ServiceLineFunction
 {
 
-    public int ID { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public ServiceLineFunction()
+    {
 
-    public int ServiceLineFunctionID { get; set; }
+        this.Activities = new HashSet<Activity>();
+
+    }
+
+
+    public int ID { get; set; }
 
     public string Name { get; set; }
 
@@ -28,7 +35,9 @@ public partial class Activity
 
 
 
-    public virtual ServiceLineFunction ServiceLineFunction { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Activity> Activities { get; set; }
 
 }
 
